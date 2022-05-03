@@ -1,0 +1,2 @@
+The endpoint URL for a running elastic beanstalk:
+http://udacity-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://image.thanhnien.vn/w1024/Uploaded/2022/cjhwpdhnw/2022_04_29/277456855-728299548584529-8539541276048753234-n-8287.jpg
