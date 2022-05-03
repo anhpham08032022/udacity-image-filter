@@ -9,6 +9,9 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   // Set the network port
   const port = process.env.PORT || 8082;
+
+  // Init valid-url module
+  var validUrl = require('valid-url');
   
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
@@ -28,7 +31,17 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
   /**************************************************************************** */
-
+  app.get("/filteredimage", async (req, res) => {
+    let {image_url} = req.query;
+    if (!validUrl.isUri(image_url)) {
+      return res.status(400).send({ message: 'URL of image is required' });
+    }
+    console.log(`Start downloading the image url: ${image_url}`);
+    const outPath = await filterImageFromURL(image_url);
+    // deleteLocalFiles([result])
+    console.log(`The PATH: ${outPath}`);
+    res.sendFile(outPath);
+  })
   //! END @TODO1
   
   // Root Endpoint
