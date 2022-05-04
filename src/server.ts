@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 import { nextTick } from 'process';
@@ -14,7 +14,7 @@ import { nextTick } from 'process';
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
-  app.get("/filteredimage", async (req, res) => {
+  app.get("/filteredimage", async (req:Request, res:Response) => {
     let {image_url} = req.query;
 
     // validate the image_url query
@@ -30,7 +30,7 @@ import { nextTick } from 'process';
       return res.status(442).send({ message: 'Got Error message when processing image.' });
     }
     
-    console.log(`The location of the file: ${outPath}`);
+    console.debug(`The location of the file: ${outPath}`);
     res.sendFile(outPath);
 
     // remove the file when res.sendFile is done
@@ -42,11 +42,10 @@ import { nextTick } from 'process';
       }
     });
   })
-  //! END @TODO1
-  
+
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async ( req:Request, res:Response ) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
   
